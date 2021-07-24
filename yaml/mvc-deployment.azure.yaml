@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mvc
-        image: docker9210/mvc:v1
+        image: docker9210/mvc:v2.#{Build.BuildId}#
         # image: houssemdocker/webapp:111
         # image: ACR_NAME/DOCKER_IMAGE:TAG
         # image: __ACR_NAME__.azurecr.io/__DOCKER_IMAGE__:__TAG__
