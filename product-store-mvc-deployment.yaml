@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-blue
+  labels:
+    app: web-blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-blue
+  template:
+    metadata:
+      labels:
+        app: web-blue
+    spec:
+      containers:
+      - name: color
+        image: knet/color:3
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-blue-svc
+  labels:
+    app: web-blue-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: web-blue
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: blue-ingress
+spec:
+  rules:
+  - host: blue.knetsks.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: web-blue-svc
+          servicePort: http
+---
